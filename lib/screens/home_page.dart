@@ -6,17 +6,12 @@ import 'package:flutter_task_planner_app/widgets/task_column.dart';
 import 'package:flutter_task_planner_app/widgets/active_project_card.dart';
 import 'package:flutter_task_planner_app/widgets/top_container.dart';
 
-class HomePage extends StatelessWidget {
-  Text subheading(String title) {
-    return Text(
-      title,
-      style: TextStyle(
-          color: LightColors.kDarkBlue,
-          fontSize: 20.0,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 1.2),
-    );
-  }
+import 'dart:async';
+import 'package:nfc_in_flutter/nfc_in_flutter.dart';
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
 
   static CircleAvatar calendarIcon() {
     return CircleAvatar(
@@ -28,6 +23,75 @@ class HomePage extends StatelessWidget {
         color: Colors.white,
       ),
     );
+  }
+}
+
+class _HomePageState extends State<HomePage> {
+  StreamSubscription<NDEFMessage> _stream;
+
+  Text subheading(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+          color: LightColors.kDarkBlue,
+          fontSize: 20.0,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 1.2),
+    );
+  }
+
+  void _startScanning() {
+    setState(() {
+      _stream = NFC
+          .readNDEF(alertMessage: "Custom message with readNDEF#alertMessage")
+          .listen((NDEFMessage message) {
+        if (message.isEmpty) {
+          print("Read empty NDEF message");
+          return;
+        }
+        print("Read NDEF message with ${message.records.length} records");
+        for (NDEFRecord record in message.records) {
+          print(
+              "Record '${record.id ?? "[NO ID]"}' with TNF '${record.tnf}', type '${record.type}', payload '${record.payload}' and data '${record.data}' and language code '${record.languageCode}'");
+        }
+      }, onError: (error) {
+        setState(() {
+          _stream = null;
+        });
+        if (error is NFCUserCanceledSessionException) {
+          print("user canceled");
+        } else if (error is NFCSessionTimeoutException) {
+          print("session timed out");
+        } else {
+          print("error: $error");
+        }
+      }, onDone: () {
+        setState(() {
+          _stream = null;
+        });
+      });
+    });
+  }
+
+  void _stopScanning() {
+    _stream?.cancel();
+    setState(() {
+      _stream = null;
+    });
+  }
+
+  void _toggleScan() {
+    if (_stream == null) {
+      _startScanning();
+    } else {
+      _stopScanning();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _stopScanning();
   }
 
   @override
@@ -131,11 +195,15 @@ class HomePage extends StatelessWidget {
                                         builder: (context) => CalendarPage()),
                                   );
                                 },
-                                child: calendarIcon(),
+                                child: HomePage.calendarIcon(),
                               ),
                             ],
                           ),
                           SizedBox(height: 15.0),
+                          RaisedButton(
+                            child: const Text("Toggle scan"),
+                            onPressed: _toggleScan,
+                          ),
                           TaskColumn(
                             icon: Icons.alarm,
                             iconBackgroundColor: LightColors.kRed,

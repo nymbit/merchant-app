@@ -5,6 +5,8 @@ import 'package:flutter_task_planner_app/widgets/back_button.dart';
 import 'package:flutter_task_planner_app/widgets/my_text_field.dart';
 import 'package:flutter_task_planner_app/screens/home_page.dart';
 
+import 'home_page.dart';
+
 class CreateNewTaskPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
