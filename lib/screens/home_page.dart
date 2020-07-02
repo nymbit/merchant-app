@@ -4,10 +4,15 @@ import 'package:flutter_task_planner_app/theme/colors/light_colors.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter_task_planner_app/widgets/task_column.dart';
 import 'package:flutter_task_planner_app/widgets/active_project_card.dart';
-import 'package:flutter_task_planner_app/widgets/top_container.dart';
+import 'package:flutter_task_planner_app/widgets/gradient_container.dart';
 
 import 'dart:async';
 import 'package:nfc_in_flutter/nfc_in_flutter.dart';
+
+import '../theme/colors/light_colors.dart';
+import '../theme/colors/light_colors.dart';
+import '../theme/colors/light_colors.dart';
+import '../theme/colors/light_colors.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,7 +21,7 @@ class HomePage extends StatefulWidget {
   static CircleAvatar calendarIcon() {
     return CircleAvatar(
       radius: 25.0,
-      backgroundColor: LightColors.kGreen,
+      backgroundColor: LightColors.kDarkBlue,
       child: Icon(
         Icons.calendar_today,
         size: 20.0,
@@ -98,11 +103,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: LightColors.kLightYellow,
+      backgroundColor: LightColors.kDarkBlue,
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            TopContainer(
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              color: LightColors.kDarkBlue,
               height: 200,
               width: width,
               child: Column(
@@ -111,10 +118,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Icon(Icons.menu,
-                            color: LightColors.kDarkBlue, size: 30.0),
-                        Icon(Icons.search,
-                            color: LightColors.kDarkBlue, size: 25.0),
+                        Icon(Icons.menu, color: Colors.white, size: 30.0),
                       ],
                     ),
                     Padding(
@@ -122,46 +126,30 @@ class _HomePageState extends State<HomePage> {
                           horizontal: 0, vertical: 0.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          CircularPercentIndicator(
-                            radius: 90.0,
-                            lineWidth: 5.0,
-                            animation: true,
-                            percent: 0.75,
-                            circularStrokeCap: CircularStrokeCap.round,
-                            progressColor: LightColors.kRed,
-                            backgroundColor: LightColors.kDarkYellow,
-                            center: CircleAvatar(
-                              backgroundColor: LightColors.kBlue,
-                              radius: 35.0,
-                              backgroundImage: AssetImage(
-                                'assets/images/avatar.png',
-                              ),
-                            ),
-                          ),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
                                 child: Text(
-                                  'Sourav Suman',
+                                  'Tell us',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                    fontSize: 22.0,
-                                    color: LightColors.kDarkBlue,
-                                    fontWeight: FontWeight.w800,
+                                    fontSize: 32.0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ),
                               Container(
                                 child: Text(
-                                  'App Developer',
+                                  'what you love',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black45,
-                                    fontWeight: FontWeight.w400,
+                                    fontSize: 32.0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ),
@@ -173,110 +161,65 @@ class _HomePageState extends State<HomePage> {
                   ]),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      color: Colors.transparent,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              subheading('My Tasks'),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => CalendarPage()),
-                                  );
-                                },
-                                child: HomePage.calendarIcon(),
+              child: ShaderMask(
+                shaderCallback: (Rect rect) {
+                  return LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: <Color>[Colors.transparent, LightColors.kDarkBlue],
+                  ).createShader(Rect.fromLTRB(
+                      0, 0, rect.width, rect.height - (0.9 * rect.height)));
+                },
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        color: Colors.transparent,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 10.0),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: 15.0),
+                            SizedBox(
+                              width: double.infinity,
+                              child: RaisedButton(
+                                child: const Text("Scan Bit",
+                                    style: TextStyle(
+                                      color: LightColors.kDarkBlue,
+                                      fontWeight: FontWeight.w700,
+                                    )),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0)),
+                                padding: EdgeInsets.all(10.0),
+                                color: LightColors.kLightBlue,
+                                onPressed: _toggleScan,
                               ),
-                            ],
-                          ),
-                          SizedBox(height: 15.0),
-                          RaisedButton(
-                            child: const Text("Toggle scan"),
-                            onPressed: _toggleScan,
-                          ),
-                          TaskColumn(
-                            icon: Icons.alarm,
-                            iconBackgroundColor: LightColors.kRed,
-                            title: 'To Do',
-                            subtitle: '5 tasks now. 1 started',
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          TaskColumn(
-                            icon: Icons.blur_circular,
-                            iconBackgroundColor: LightColors.kDarkYellow,
-                            title: 'In Progress',
-                            subtitle: '1 tasks now. 1 started',
-                          ),
-                          SizedBox(height: 15.0),
-                          TaskColumn(
-                            icon: Icons.check_circle_outline,
-                            iconBackgroundColor: LightColors.kBlue,
-                            title: 'Done',
-                            subtitle: '18 tasks now. 13 started',
-                          ),
-                        ],
+                            ),
+                            GradientContainer(
+                              strokeWidth: 4,
+                              radius: 20,
+                              backgroundColor: LightColors.kDarkContrastBlue,
+                              gradient: LinearGradient(
+                                colors: [LightColors.kSalmon, LightColors.kPurple],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                              child:
+                                  Text('Wow', style: TextStyle(fontSize: 16)),
+                              onPressed: () {},
+                            ),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      color: Colors.transparent,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          subheading('Active Projects'),
-                          SizedBox(height: 5.0),
-                          Row(
-                            children: <Widget>[
-                              ActiveProjectsCard(
-                                cardColor: LightColors.kGreen,
-                                loadingPercent: 0.25,
-                                title: 'Medical App',
-                                subtitle: '9 hours progress',
-                              ),
-                              SizedBox(width: 20.0),
-                              ActiveProjectsCard(
-                                cardColor: LightColors.kRed,
-                                loadingPercent: 0.6,
-                                title: 'Making History Notes',
-                                subtitle: '20 hours progress',
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              ActiveProjectsCard(
-                                cardColor: LightColors.kDarkYellow,
-                                loadingPercent: 0.45,
-                                title: 'Sports App',
-                                subtitle: '5 hours progress',
-                              ),
-                              SizedBox(width: 20.0),
-                              ActiveProjectsCard(
-                                cardColor: LightColors.kBlue,
-                                loadingPercent: 0.9,
-                                title: 'Online Flutter Course',
-                                subtitle: '23 hours progress',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                     
+                    ],
+                  ),
                 ),
+                blendMode: BlendMode.dstATop,
               ),
             ),
           ],
