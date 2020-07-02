@@ -17,4 +17,10 @@ class LightColors {
   static const Color kLightBlue = Color(0xFFcad2ee);
   static const Color kPurple = Color(0xFF606fb0);
   static const Color kSalmon = Color(0xFFea6c6e);
+
+
+  //to move to widget
+  static const Color kPurpleGradientTop = Color(0xFF384882);
+  static const Color kPurpleGradientBottom = Color(0xFF5a6aab);
+  
 }

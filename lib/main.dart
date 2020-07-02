@@ -21,10 +21,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: LightColors.kDarkBlue,
-              displayColor: LightColors.kDarkBlue,
-              fontFamily: 'Poppins'
-            ),
+            bodyColor: LightColors.kDarkBlue,
+            displayColor: LightColors.kDarkBlue,
+            fontFamily: 'Poppins'),
       ),
       home: HomePage(),
       debugShowCheckedModeBanner: false,

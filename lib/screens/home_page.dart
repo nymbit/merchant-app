@@ -5,10 +5,14 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter_task_planner_app/widgets/task_column.dart';
 import 'package:flutter_task_planner_app/widgets/active_project_card.dart';
 import 'package:flutter_task_planner_app/widgets/gradient_container.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'dart:async';
 import 'package:nfc_in_flutter/nfc_in_flutter.dart';
 
+import '../theme/colors/light_colors.dart';
+import '../theme/colors/light_colors.dart';
+import '../theme/colors/light_colors.dart';
 import '../theme/colors/light_colors.dart';
 import '../theme/colors/light_colors.dart';
 import '../theme/colors/light_colors.dart';
@@ -33,6 +37,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   StreamSubscription<NDEFMessage> _stream;
+  PanelController _panelController = new PanelController();
 
   Text subheading(String title) {
     return Text(
@@ -103,128 +108,146 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: LightColors.kDarkBlue,
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              color: LightColors.kDarkBlue,
-              height: 200,
-              width: width,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Icon(Icons.menu, color: Colors.white, size: 30.0),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 0, vertical: 0.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                child: Text(
-                                  'Tell us',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontSize: 32.0,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                child: Text(
-                                  'what you love',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontSize: 32.0,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ]),
-            ),
-            Expanded(
-              child: ShaderMask(
-                shaderCallback: (Rect rect) {
-                  return LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: <Color>[Colors.transparent, LightColors.kDarkBlue],
-                  ).createShader(Rect.fromLTRB(
-                      0, 0, rect.width, rect.height - (0.9 * rect.height)));
-                },
-                child: SingleChildScrollView(
+        backgroundColor: LightColors.kDarkBlue,
+        body: SlidingUpPanel(
+          minHeight: 0,
+          controller: _panelController,
+          backdropEnabled: true,
+          color: LightColors.kDarkBlue,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24.0),
+            topRight: Radius.circular(24.0),
+          ),
+          panel: Container(
+            child: Text("testing panel content"),
+          ),
+          body: SafeArea(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  color: LightColors.kDarkBlue,
+                  height: 200,
+                  width: width,
                   child: Column(
-                    children: <Widget>[
-                      Container(
-                        color: Colors.transparent,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            SizedBox(height: 15.0),
-                            SizedBox(
-                              width: double.infinity,
-                              child: RaisedButton(
-                                child: const Text("Scan Bit",
-                                    style: TextStyle(
-                                      color: LightColors.kDarkBlue,
-                                      fontWeight: FontWeight.w700,
-                                    )),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0)),
-                                padding: EdgeInsets.all(10.0),
-                                color: LightColors.kLightBlue,
-                                onPressed: _toggleScan,
-                              ),
-                            ),
-                            GradientContainer(
-                              strokeWidth: 4,
-                              radius: 20,
-                              backgroundColor: LightColors.kDarkContrastBlue,
-                              gradient: LinearGradient(
-                                colors: [LightColors.kSalmon, LightColors.kPurple],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                              ),
-                              child:
-                                  Text('Wow', style: TextStyle(fontSize: 16)),
-                              onPressed: () {},
-                            ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            
+                            Icon(Icons.menu, color: Colors.white, size: 30.0),
                           ],
                         ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 0, vertical: 0.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    child: Text(
+                                      'Tell us',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontSize: 32.0,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      'what you love',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontSize: 32.0,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ]),
+                ),
+                Expanded(
+                  child: ShaderMask(
+                    shaderCallback: (Rect rect) {
+                      return LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: <Color>[
+                          Colors.transparent,
+                          LightColors.kDarkBlue
+                        ],
+                      ).createShader(Rect.fromLTRB(
+                          0, 0, rect.width, rect.height - (0.9 * rect.height)));
+                    },
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            color: Colors.transparent,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 10.0),
+                            child: Column(
+                              children: <Widget>[
+                                SizedBox(height: 15.0),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: RaisedButton(
+                                    child: const Text("Scan Bit",
+                                        style: TextStyle(
+                                          color: LightColors.kDarkBlue,
+                                          fontWeight: FontWeight.w700,
+                                        )),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0)),
+                                    padding: EdgeInsets.all(10.0),
+                                    color: LightColors.kLightBlue,
+                                    onPressed: _toggleScan,
+                                  ),
+                                ),
+                                GradientContainer(
+                                  strokeWidth: 4,
+                                  radius: 20,
+                                  backgroundColor:
+                                      LightColors.kDarkContrastBlue,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      LightColors.kSalmon,
+                                      LightColors.kPurple
+                                    ],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                  child: Text('Wow',
+                                      style: TextStyle(fontSize: 16)),
+                                  onPressed: () => _panelController.open(),
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                     
-                    ],
+                    ),
+                    blendMode: BlendMode.dstATop,
                   ),
                 ),
-                blendMode: BlendMode.dstATop,
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
