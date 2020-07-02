@@ -109,6 +109,8 @@ class _HomePageState extends State<HomePage> {
           minHeight: 0,
           controller: _panelController,
           backdropEnabled: true,
+          backdropOpacity: 0.9,
+          renderPanelSheet: false,
           color: LightColors.kDarkBlue,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24.0),
@@ -116,130 +118,110 @@ class _HomePageState extends State<HomePage> {
           ),
           panel: Container(
             padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                color: LightColors.kDarkBlue,
+                borderRadius: BorderRadius.all(Radius.circular(24.0))),
+            margin: const EdgeInsets.all(15.0),
             child: ScanResult(),
           ),
           body: SafeArea(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  color: LightColors.kDarkBlue,
-                  height: 200,
-                  width: width,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Icon(Icons.menu, color: Colors.white, size: 30.0),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 0, vertical: 0.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    child: Text(
-                                      'Nymbit',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        fontSize: 32.0,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      'Meerendal MTB',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        fontSize: 32.0,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width*0.8,
-                                    child: Text(
-                                      'So we can show you what you like. Come back and change this whenever.',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                        fontSize: 10.0,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      ]),
-                ),
-                Expanded(
-                  child: ShaderMask(
-                    shaderCallback: (Rect rect) {
-                      return LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: <Color>[
-                          Colors.transparent,
-                          LightColors.kDarkBlue
-                        ],
-                      ).createShader(Rect.fromLTRB(
-                          0, 0, rect.width, rect.height - (0.9 * rect.height)));
-                    },
-                    child: SingleChildScrollView(
+            child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      color: LightColors.kDarkBlue,
+                      height: 200,
+                      width: width,
                       child: Column(
-                        children: <Widget>[
-                          Container(
-                            color: Colors.transparent,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 10.0),
-                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                SizedBox(height: 15.0),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: RaisedButton(
-                                    child: const Text("Scan Bit",
-                                        style: TextStyle(
-                                          color: LightColors.kDarkBlue,
-                                          fontWeight: FontWeight.w700,
-                                        )),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(18.0)),
-                                    padding: EdgeInsets.all(10.0),
-                                    color: LightColors.kLightBlue,
-                                    // onPressed: _toggleScan,
-                                    onPressed: () => _panelController.open(),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
+                                Icon(Icons.menu,
+                                    color: Colors.white, size: 30.0),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 0, vertical: 0.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text(
+                                          'Nymbit',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 32.0,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Text(
+                                          'Meerendal MTB',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 32.0,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
+                                        child: Text(
+                                          'So we can show you what you like. Come back and change this whenever.',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 10.0,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )
+                          ]),
                     ),
-                    blendMode: BlendMode.dstATop,
-                  ),
-                ),
-              ],
-            ),
+                    Expanded(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              child: RaisedButton(
+                                child: const Text("Scan Bit",
+                                    style: TextStyle(
+                                      color: LightColors.kDarkBlue,
+                                      fontWeight: FontWeight.w700,
+                                    )),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0)),
+                                padding: EdgeInsets.all(10.0),
+                                color: LightColors.kLightBlue,
+                                // onPressed: _toggleScan,
+                                onPressed: () => _panelController.open(),
+                              ),
+                            )
+                          ]),
+                    ),
+                  ],
+                )),
           ),
         ));
   }
