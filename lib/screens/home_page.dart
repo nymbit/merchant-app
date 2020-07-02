@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_task_planner_app/screens/calendar_page.dart';
 import 'package:flutter_task_planner_app/theme/colors/light_colors.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:flutter_task_planner_app/widgets/task_column.dart';
-import 'package:flutter_task_planner_app/widgets/active_project_card.dart';
-import 'package:flutter_task_planner_app/widgets/gradient_container.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'dart:async';
 import 'package:nfc_in_flutter/nfc_in_flutter.dart';
+import 'package:flutter_task_planner_app/widgets/scan_result.dart';
 
 import '../theme/colors/light_colors.dart';
 import '../theme/colors/light_colors.dart';
@@ -119,7 +115,8 @@ class _HomePageState extends State<HomePage> {
             topRight: Radius.circular(24.0),
           ),
           panel: Container(
-            child: Text("testing panel content"),
+            padding: EdgeInsets.all(20),
+            child: ScanResult(),
           ),
           body: SafeArea(
             child: Column(
@@ -150,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                                 children: <Widget>[
                                   Container(
                                     child: Text(
-                                      'Tell us',
+                                      'Nymbit',
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontSize: 32.0,
@@ -161,12 +158,24 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Container(
                                     child: Text(
-                                      'what you love',
+                                      'Meerendal MTB',
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontSize: 32.0,
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width*0.8,
+                                    child: Text(
+                                      'So we can show you what you like. Come back and change this whenever.',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontSize: 10.0,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                   ),
@@ -213,25 +222,9 @@ class _HomePageState extends State<HomePage> {
                                             BorderRadius.circular(18.0)),
                                     padding: EdgeInsets.all(10.0),
                                     color: LightColors.kLightBlue,
-                                    onPressed: _toggleScan,
+                                    // onPressed: _toggleScan,
+                                    onPressed: () => _panelController.open(),
                                   ),
-                                ),
-                                GradientContainer(
-                                  strokeWidth: 4,
-                                  radius: 20,
-                                  backgroundColor:
-                                      LightColors.kDarkContrastBlue,
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      LightColors.kSalmon,
-                                      LightColors.kPurple
-                                    ],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                  ),
-                                  child: Text('Wow',
-                                      style: TextStyle(fontSize: 16)),
-                                  onPressed: () => _panelController.open(),
                                 ),
                                 SizedBox(
                                   height: 15.0,

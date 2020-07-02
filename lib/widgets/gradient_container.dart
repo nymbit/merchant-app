@@ -6,12 +6,14 @@ class GradientContainer extends StatelessWidget {
   final VoidCallback _callback;
   final double _radius;
   final Color _backgroundColor;
+  final String _text;
 
   GradientContainer({
     @required double strokeWidth,
     @required double radius,
     @required Gradient gradient,
     @required Color backgroundColor,
+    @required String text,
     @required Widget child,
     @required VoidCallback onPressed,
   })  : this._painter = _GradientPainter(
@@ -19,7 +21,8 @@ class GradientContainer extends StatelessWidget {
         this._child = child,
         this._callback = onPressed,
         this._radius = radius,
-        this._backgroundColor = backgroundColor;
+        this._backgroundColor = backgroundColor,
+        this._text = text;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +56,7 @@ class GradientContainer extends StatelessWidget {
             ),
           ),
         ),
-        Text("testing",
+        Text(_text,
             style: TextStyle(
               color: Colors.white,
             ))
