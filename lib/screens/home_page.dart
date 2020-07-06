@@ -7,12 +7,6 @@ import 'package:nfc_in_flutter/nfc_in_flutter.dart';
 import 'package:flutter_task_planner_app/widgets/scan_result.dart';
 
 import '../theme/colors/light_colors.dart';
-import '../theme/colors/light_colors.dart';
-import '../theme/colors/light_colors.dart';
-import '../theme/colors/light_colors.dart';
-import '../theme/colors/light_colors.dart';
-import '../theme/colors/light_colors.dart';
-import '../theme/colors/light_colors.dart';
 
 class HomePage extends StatefulWidget {
   @override
