@@ -111,6 +111,7 @@ class _HomePageState extends State<HomePage> {
           backdropEnabled: true,
           backdropOpacity: 0.9,
           renderPanelSheet: false,
+          parallaxEnabled: true,
           color: LightColors.kDarkBlue,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24.0),
